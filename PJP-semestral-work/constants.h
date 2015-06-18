@@ -41,7 +41,7 @@ typedef enum {
     EQ, NEQ, LT, GT, LTE, GTE, LPAR, RPAR, LBRACK, RBRACK, ASSIGN,
     DOT, DDOT, COMMA, COLON, SEMICOLON,
     kwPROGRAM, kwINTEGER, kwDIV, kwDOWNTO, kwTO,
-    kwVAR, kwCONST, kwBEGIN, kwEND, kwIF, kwTHEN, kwELSE,
+    kwVAR, kwCONST, kwBEGIN, kwEND, kwIF, kwTHEN, kwELSE, kwFOR,
     kwWHILE, kwDO, kwWRITE, kwREAD,
     EOI, ERR
 } LexSymbolType;
@@ -52,24 +52,25 @@ static const char * LexSymbolNames[] = {
     "EQ", "NEQ", "LT", "GT", "LTE", "GTE", "LPAR", "RPAR", "LBRACK", "RBRACK", "ASSIGN",
     "DOT", "DDOT", "COMMA", "COLON", "SEMICOLON",
     "kwPROGRAM", "kwINTEGER", "kwDIV", "kwDOWNTO", "kwTO",
-    "kwVAR", "kwCONST", "kwBEGIN", "kwEND", "kwIF", "kwTHEN", "kwELSE",
+    "kwVAR", "kwCONST", "kwBEGIN", "kwEND", "kwIF", "kwTHEN", "kwELSE", "kwFOR",
     "kwWHILE", "kwDO", "kwWRITE", "kwREAD",
     "EOI", "ERR"
 };
 
 static std::map<std::string, LexSymbolType> & createKeywordLexSymbolMap(void){
     std::map<std::string, LexSymbolType>& map = *(new std::map<std::string, LexSymbolType>());
-    map["var"] = kwVAR;
+    map["var"]     = kwVAR;
     map["program"] = kwPROGRAM;
     map["integer"] = kwINTEGER;
     map["begin"]   = kwBEGIN;
     map["end"]     = kwEND;
     map["do"]      = kwDO;
-    map ["to"]     = kwTO;
+    map["to"]      = kwTO;
     map["if"]      = kwIF;
     map["then"]    = kwTHEN;
     map["div"]     = kwDIV;
     map["downto"]  = kwDOWNTO;
+    map["for"]     = kwFOR;
     return map;
 }
 

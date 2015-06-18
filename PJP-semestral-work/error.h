@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 
+#define TODO_WORK printf("%s: not finoshed yet", __PRETTY_FUNCTION__);
 void error(const char * text);
 
 #endif /* defined(__PJP_semestral_work__error__) */

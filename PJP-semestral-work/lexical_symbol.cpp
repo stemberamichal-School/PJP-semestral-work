@@ -11,6 +11,25 @@
 #include "error.h"
 
 #pragma mark - LexicalSymbol
+
+LexicalSymbol::LexicalSymbol(){
+    this->type = UNKNOWN;
+}
+
+LexicalSymbol::LexicalSymbol(LexSymbolType type){
+    this->type = type;
+}
+
+LexicalSymbol::LexicalSymbol(const char ident[]){
+    this->type = IDENT;
+    memcpy(this->ident, ident, MAX_IDENT_LEN);
+}
+
+LexicalSymbol::LexicalSymbol(int number){
+    this->type = NUMBER;
+    this->number = number;
+}
+
 void LexicalSymbol::appendCharToIdent(char character){
     size_t len = strlen(ident);
     if(len >= MAX_IDENT_LEN){

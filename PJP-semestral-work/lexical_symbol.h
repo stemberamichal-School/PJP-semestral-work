@@ -18,6 +18,11 @@ struct LexicalSymbol {
     char      ident[MAX_IDENT_LEN];   /* atribut symbolu IDENT */
     int       number;                 /* atribut symbolu NUMB */
     
+    LexicalSymbol();
+    LexicalSymbol(LexSymbolType type);
+    LexicalSymbol(const char ident[]);
+    LexicalSymbol(int number);
+    
     void appendCharToIdent(char character);
     void appendCharToNumber(char character);
     LexicalSymbol & operator=(const LexicalSymbol & toCopy);

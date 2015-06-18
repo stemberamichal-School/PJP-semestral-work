@@ -14,17 +14,17 @@
 #include <string>
 
 #pragma mark - LexicalAnalyzer
-LexicalAnalyzer::LexicalAnalyzer(const char * fileName){
-    infile.open(fileName, std::ios::binary);
+LexicalAnalyzer::LexicalAnalyzer(std::istream & is)
+:input_stream(is){
     readInput();
 }
 
 LexicalAnalyzer::~LexicalAnalyzer(){
-    infile.close();
+    
 }
 
 void LexicalAnalyzer::readInput(void) {
-    character = infile.get();
+    character = input_stream.get();
     if ((character>='A' && character<='Z') || (character>='a' && character<='z'))
         characterType = TYPE_LETTER;
     else if (character>='0' && character<='9')

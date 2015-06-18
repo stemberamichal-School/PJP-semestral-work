@@ -11,18 +11,19 @@
 
 #include "constants.h"
 #include "lexical_symbol.h"
+#include "base_lexal.h"
 #include <fstream>
 #include <iostream>
 #include <string>
 
-class LexicalAnalyzer {
+class LexicalAnalyzer : public BaseLexal{
     char character;
     CharType characterType;
     AutomatState actualState;
     LexicalSymbol outputSymbol;
-    std::ifstream infile;
+    std::istream & input_stream;
 public:
-    LexicalAnalyzer(const char * fileName);
+    LexicalAnalyzer(std::istream & is);
     ~LexicalAnalyzer(void);
     LexicalSymbol readLexem(void);
 private:
