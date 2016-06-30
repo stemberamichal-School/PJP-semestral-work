@@ -24,7 +24,9 @@ struct LexicalSymbol {
     LexicalSymbol(int number);
     
     void appendCharToIdent(char character);
-    void appendCharToNumber(char character);
+    void appendCharToDecimal(char character);
+    void appendCharToOctal(char character);
+    void appendCharToHexa(char character);
     LexicalSymbol & operator=(const LexicalSymbol & toCopy);
     friend std::ostream & operator << ( std::ostream & os, const LexicalSymbol & lexSymbol);
 };

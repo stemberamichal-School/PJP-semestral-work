@@ -34,7 +34,9 @@ private:
     void applyStateStart(void);
     void applyStateIdenKeyword(void);
     void applyStateIden(void);
-    void applyStateNumber(void);
+    void applyStateDecimalNumber();
+    void applyStateOctalNumber();
+    void applyStateHexadecimalNumber();
     void applyStateLT(void);
     void applyStateGT(void);
     void applyStateDot(void);

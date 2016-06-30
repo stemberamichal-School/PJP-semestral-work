@@ -13,6 +13,7 @@
 #include <map>
 
 #define MAX_IDENT_LEN 32
+
 typedef enum {
     TYPE_LETTER,
     TYPE_NUMBER,
@@ -27,7 +28,9 @@ typedef enum {
     
     STATE_IDEN_KW,
     STATE_IDEN,
-    STATE_NUMBER,
+    STATE_DECIMAL,
+    STATE_OCTAL,
+    STATE_HEXADECIMAL,
     STATE_LT,
     STATE_GT,
     STATE_DOT,
@@ -40,9 +43,9 @@ typedef enum {
     IDENT, NUMBER, PLUS, MINUS, TIMES, DIVIDE,
     EQ, NEQ, LT, GT, LTE, GTE, LPAR, RPAR, LBRACK, RBRACK, ASSIGN,
     DOT, DDOT, COMMA, COLON, SEMICOLON,
-    kwPROGRAM, kwINTEGER, kwDIV, kwDOWNTO, kwTO,
-    kwVAR, kwCONST, kwBEGIN, kwEND, kwIF, kwTHEN, kwELSE, kwFOR,
-    kwWHILE, kwDO, kwWRITE, kwREAD,
+    kwPROGRAM, kwINTEGER, kwARRAY, kwDIV, kwMOD, kwDOWNTO, kwTO, kwOF,
+    kwVAR, kwCONST, kwBEGIN, kwEND, kwIF, kwTHEN, kwELSE, kwFOR, kwCASE,
+    kwWHILE, kwDO, kwWRITELN, kwREADLN,
     EOI, ERR
 } LexSymbolType;
 
@@ -51,9 +54,9 @@ static const char * LexSymbolNames[] = {
     "IDENT", "NUMBER", "PLUS", "MINUS", "TIMES", "DIVIDE",
     "EQ", "NEQ", "LT", "GT", "LTE", "GTE", "LPAR", "RPAR", "LBRACK", "RBRACK", "ASSIGN",
     "DOT", "DDOT", "COMMA", "COLON", "SEMICOLON",
-    "kwPROGRAM", "kwINTEGER", "kwDIV", "kwDOWNTO", "kwTO",
-    "kwVAR", "kwCONST", "kwBEGIN", "kwEND", "kwIF", "kwTHEN", "kwELSE", "kwFOR",
-    "kwWHILE", "kwDO", "kwWRITE", "kwREAD",
+    "kwPROGRAM", "kwINTEGER", "kwARRAY", "kwDIV", "kwMOD", "kwDOWNTO", "kwTO", "kwOF",
+    "kwVAR", "kwCONST", "kwBEGIN", "kwEND", "kwIF", "kwTHEN", "kwELSE", "kwFOR", "kwCASE",
+    "kwWHILE", "kwDO", "kwWRITELN", "kwREADLN",
     "EOI", "ERR"
 };
 
@@ -61,16 +64,23 @@ static std::map<std::string, LexSymbolType> & createKeywordLexSymbolMap(void){
     std::map<std::string, LexSymbolType>& map = *(new std::map<std::string, LexSymbolType>());
     map["var"]     = kwVAR;
     map["program"] = kwPROGRAM;
+    map["const"]   = kwCONST;
     map["integer"] = kwINTEGER;
+    map["array"]   = kwARRAY;
     map["begin"]   = kwBEGIN;
     map["end"]     = kwEND;
     map["do"]      = kwDO;
     map["to"]      = kwTO;
+    map["of"]      = kwOF;
     map["if"]      = kwIF;
     map["then"]    = kwTHEN;
     map["div"]     = kwDIV;
+    map["mod"]     = kwMOD;
     map["downto"]  = kwDOWNTO;
     map["for"]     = kwFOR;
+    map["case"]    = kwCASE;
+    map["readln"]  = kwREADLN;
+    map["writeln"] = kwWRITELN;
     return map;
 }
 

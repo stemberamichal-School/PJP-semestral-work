@@ -49,13 +49,13 @@ LexicalSymbol LexicalAnalyzer::readLexem(void){
                 applyStateStart();
                 break;
             case STATE_DECIMAL:
-                applyStateDecimalNumber();
+                applyStateDecimal();
                 break;
-            case STATE_OCTAL:
-                applyStateOctalNumber();
+            case STATE_OCTA:
+                applyStateDecimal();
                 break;
-            case STATE_HEXADECIMAL:
-                applyStateHexadecimalNumber();
+            case STATE_DECIMAL:
+                applyStateDecimal();
                 break;
             case STATE_IDEN_KW:
                 applyStateIdenKeyword();
@@ -179,16 +179,6 @@ void LexicalAnalyzer::applyStateStart(void){
             actualState = STATE_COMMENT;
             readInput();
             return;
-        case '&':
-            outputSymbol.type = NUMBER;
-            actualState = STATE_OCTAL;
-            readInput();
-            return;
-        case '$':
-            outputSymbol.type = NUMBER;
-            actualState = STATE_HEXADECIMAL;
-            readInput();
-            return;
         default:
             break;
     }
@@ -203,9 +193,9 @@ void LexicalAnalyzer::applyStateStart(void){
             readInput();
             break;
         case TYPE_NUMBER:
-            actualState = STATE_DECIMAL;
+            actualState = STATE_NUMBER;
             outputSymbol.type = NUMBER;
-            outputSymbol.appendCharToDecimal(character);
+            outputSymbol.appendCharToNumber(character);
             readInput();
             break;
         case TYPE_END:
@@ -216,6 +206,9 @@ void LexicalAnalyzer::applyStateStart(void){
             error("Unknown characterType.");
             break;
     }
+}
+
+void LexicalAnalyzer::applyStateNumber(void){
 }
 
 void LexicalAnalyzer::applyStateDecimalNumber(){
@@ -234,7 +227,7 @@ void LexicalAnalyzer::applyStateDecimalNumber(){
 void LexicalAnalyzer::applyStateOctalNumber(){
     switch (characterType) {
         case TYPE_NUMBER:
-            outputSymbol.appendCharToOctal(character);
+            outputSymbol.appendCharToDecimal(character);
             readInput();
             break;
         default:
@@ -243,17 +236,8 @@ void LexicalAnalyzer::applyStateOctalNumber(){
     }
 }
 
-void LexicalAnalyzer::applyStateHexadecimalNumber(){
-    switch (characterType) {
-        case TYPE_NUMBER:
-        case TYPE_LETTER:
-            outputSymbol.appendCharToHexa(character);
-            readInput();
-            break;
-        default:
-            actualState = STATE_FINISHED;
-            break;
-    }
+void LexicalAnalyzer::applyStateHexadecimalNumber{
+    
 }
 
 void LexicalAnalyzer::applyStateColon(void){

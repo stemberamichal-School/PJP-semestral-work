@@ -21,12 +21,20 @@ typedef enum {
     AST_UNARY_OP
 } AST_expression_type;
 
+typedef struct{
+    bool undefined;
+    int  value;
+}int_undefined;
+
+
 #pragma mark - AST_expression
 class AST_expression : public AST_node{
 public:
-    AST_expression_type expressiont_type();
+    AST_expression_type expression_type();
     virtual ~AST_expression(){};
     virtual void print(std::ostream& os);
+    static void print_operation(LexSymbolType operation, std::ostream& os);
+    virtual int_undefined value() = 0;
 };
 
 
@@ -35,9 +43,10 @@ class AST_binop : public AST_expression{
 public:
     AST_binop(AST_expression * left_op, AST_expression * right_op, LexSymbolType operation);
     ~AST_binop();
-    AST_expression_type expressiont_type();
+    AST_expression_type expression_type();
     void * translate_to_generic();
     void print(std::ostream& os);
+    virtual int_undefined value();
     
     //properties
     AST_expression * left_op;
@@ -50,9 +59,10 @@ class AST_unop : public AST_expression{
 public:
     AST_unop(AST_expression * operand, LexSymbolType operation);
     ~AST_unop();
-    AST_expression_type expressiont_type();
+    AST_expression_type expression_type();
     void * translate_to_generic();
     void print(std::ostream& os);
+    virtual int_undefined value();
     
     //properties
     AST_expression * operand;
@@ -62,28 +72,29 @@ public:
 
 #pragma mark - AST_constant
 class AST_constant : public AST_expression{
+int  value_int;
 public:
     AST_constant(int value_int);
     ~AST_constant(){};
-    AST_expression_type expressiont_type();
+    AST_expression_type expression_type();
     void print(std::ostream& os);
-    
-    //properties
+    virtual int_undefined value();
     void * translate_to_generic();
-    int  value_int;
 };
 
+#pragma mark - AST_var
 class AST_var : public AST_expression{
+    AST_expression * index;
+    char * ident;
 public:
-    AST_var(const char ident [MAX_IDENT_LEN]);
-    ~AST_var(){};
-    AST_expression_type expressiont_type();
-    void * translate_to_generic();
+    AST_var(char * ident);
+    AST_var(char * ident, AST_expression * index);
+    ~AST_var();
     void print(std::ostream& os);
-
-    //properties
-    char ident[MAX_IDENT_LEN];
+    virtual int_undefined value();
+    void * translate_to_generic();
 };
+
 
 
 #endif /* defined(__PJP_semestral_work__AST_exprsession__) */

@@ -39,11 +39,34 @@ void LexicalSymbol::appendCharToIdent(char character){
     ident[len]   = '\0';
 }
 
-void LexicalSymbol::appendCharToNumber(char character){
+void LexicalSymbol::appendCharToDecimal(char character){
     if(number >= (INT_MAX - 9) / 10){
         error("Number is too big. Would overflow.");
     }
     number = number * 10 + (character - '0');
+}
+
+void LexicalSymbol::appendCharToOctal(char character){
+    if(number >= (INT_MAX - 7) / 8){
+        error("Number is too big. Would overflow.");
+    }
+    number = number * 8 + (character - '0');
+}
+
+void LexicalSymbol::appendCharToHexa(char character){
+    if(number >= (INT_MAX - 15) / 16){
+        error("Number is too big. Would overflow.");
+    }
+    if (character <= '9' && character >= '0') {
+        number = number * 16 + (character - '0');
+    }else if(character >= 'a' && character <= 'f'){
+        number = number * 16 + (character - 'a' + 10);
+    }else if(character >= 'A' & character <= 'F'){
+        number = number * 16 + (character - 'A' + 10);
+    }else{
+        error("Number constains invalid hexadecimal digit.");
+    }
+    
 }
 
 LexicalSymbol & LexicalSymbol::operator=(const LexicalSymbol &toCopy){

@@ -22,11 +22,31 @@ int main(int argc, const char * argv[]) {
     }
     delete fstream;
     
+    
     //test expresions
     test_expression_plus_minus_constants();
     test_expression_plus_times_vars();
     test_expression_plus_vars_unary_minus();
     test_expression_times_vars_unary_minus();
     test_expression_unary_complicated();
+    test_expression_parentheses();
+    
+    test_assign_statement();
+    test_assign_statement_2();
+    
+    test_compound_statement();
+    test_compound_statement_2();
+    test_compound_statement_3();
+    
+    
+    test_declaration();
+    test_declaration_2();
+    test_declaration_3();
+    test_declaration_4();
+    
+    test_program();
+    
+    test_files();
+
     return 0;
 }
